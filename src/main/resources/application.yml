@@ -1,0 +1,12 @@
+spring:
+
+  data:
+    mongodb:
+      auto-index-creation: true
+      authentication-database: admin
+      repositories:
+        type: reactive
+      uri: ${MONGO_URL}
+
+jwt:
+  secret: ${SECRET_KEY:testtesttesttesttesttesttesttest}
