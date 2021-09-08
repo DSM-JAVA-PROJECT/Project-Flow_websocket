@@ -5,12 +5,10 @@ spring:
       authentication-database: admin
       uri: ${MONGO_URL}
       database: project-flow
-
+  rabbitmq:
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USERNAME:guest}
+    password: ${RABBIT_PASSWORD:guest}
+    host: ${RABBIT_URL:localhost}
 jwt:
   secret: ${SECRET_KEY:testtesttesttesttesttesttesttest}
-
-rabbit:
-  url: ${RABBIT_URL:localhost}
-  port: ${RABBIT_PORT:5672}
-  username: ${RABBIT_USERNAME:guest}
-  password: ${RABBIT_PASSWORD:guest}
