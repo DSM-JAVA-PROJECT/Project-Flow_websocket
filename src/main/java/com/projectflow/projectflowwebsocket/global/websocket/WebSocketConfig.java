@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${spring.rabbitmq.url}")
+    @Value("${spring.rabbitmq.host}")
     private String host;
 
     @Value("${spring.rabbitmq.password}")
