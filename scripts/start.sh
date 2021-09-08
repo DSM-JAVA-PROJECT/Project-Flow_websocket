@@ -23,5 +23,5 @@ DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> MONGO_URL:"
 echo "$MONGO_URL"
 echo "> run DEPLOY_JAR"    >> /home/ubuntu/deploy.log
-
+echo "$DEPLOY_JAR" >> /home/ubuntu/deploy.log
 nohup java -jar "$DEPLOY_JAR"&
