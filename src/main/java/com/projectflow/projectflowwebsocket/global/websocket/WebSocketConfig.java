@@ -42,3 +42,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
 
 }
+// sudo docker exec -it rabbitmq bash
+// rabbitmq-plugins enable rabbitmq_web_stomp
