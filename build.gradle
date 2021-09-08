@@ -22,12 +22,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-messaging'
+
+    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // mongodb
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+
+    // netty
+    implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
 }
 
 test {
