@@ -3,6 +3,7 @@ package com.projectflow.projectflowwebsocket.global.websocket;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -31,6 +32,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
+        registry.setPathMatcher(new AntPathMatcher("."));       // endpoint 가 adf.asf.adf 와 같이 .으로 구분될 수 있도록 설정
 //        registry.enableSimpleBroker("/topic");      // in memory topic 을 사용.
         registry.enableStompBrokerRelay("/topic")       // 외부 MQ 사용 설정
                 .setRelayHost(host)
