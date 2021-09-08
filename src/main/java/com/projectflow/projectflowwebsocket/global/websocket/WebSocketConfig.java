@@ -12,16 +12,16 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Value("${spring.rabbitmq.host}")
+    @Value("${rabbitmq.host}")
     private String host;
 
-    @Value("${spring.rabbitmq.password}")
+    @Value("${rabbitmq.password}")
     private String password;
 
-    @Value("${spring.rabbitmq.port}")
+    @Value("${rabbitmq.port}")
     private int port;
 
-    @Value("${spring.rabbitmq.username}")
+    @Value("${rabbitmq.username}")
     private String username;
 
     @Override
@@ -36,7 +36,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 //        registry.enableSimpleBroker("/topic");      // in memory topic 을 사용.
         registry.enableStompBrokerRelay("/topic")       // 외부 MQ 사용 설정
                 .setRelayHost(host)
-                .setRelayPort(port)
+                .setRelayPort(61613)                                    // rabbitMQ 에서 STOMP plugin 포트는 61613
                 .setClientLogin(username)
                 .setClientPasscode(password);
     }
