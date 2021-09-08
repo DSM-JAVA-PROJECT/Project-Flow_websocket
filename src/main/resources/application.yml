@@ -9,6 +9,6 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USERNAME:guest}
     password: ${RABBIT_PASSWORD:guest}
-    host: ${RABBIT_URL:localhost}
+    host: ${RABBIT_HOST:localhost}
 jwt:
   secret: ${SECRET_KEY:testtesttesttesttesttesttesttest}
