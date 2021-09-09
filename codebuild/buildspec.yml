@@ -6,10 +6,17 @@ phases:   # github action의 jobs와 비슷한 의미
       - echo Build Starting on `date`
       - chmod +x ./gradlew
       - ./gradlew build
-  post_build:
+
+  pre-upload:
     commands:
-      - echo $(basename ./build/libs/*.jar) # 해당
-      - pwd
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+  build-docker:
+    commands:
+      - docker build -t project-flow-image
+      - "docker tag project-flow-image project-flow-image:latest"
+  post-upload:
+    commands:
+      - "docker push project-flow-image:latest"
 
 artifacts:    # artifact 설정
   files:      # appspec 파일 설정, 어떤 파일을 가져갈지 선택
