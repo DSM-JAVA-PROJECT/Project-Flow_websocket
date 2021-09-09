@@ -6,7 +6,7 @@ phases:   # github action의 jobs와 비슷한 의미
       - echo Build Starting on `date`
       - chmod +x ./gradlew
       - ./gradlew build
-      - docker build -t project-flow-image jhhong0509/project-flow .
+      - docker build -t project-flow-image .
       - "docker tag project-flow-image jhhong0509/project-flow:latest"
 
   pre_build:
