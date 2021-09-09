@@ -11,8 +11,8 @@ sudo docker stop project-flow
 sudo docker rm project-flow
 # Docker Container를 중지 및 제거
 
-if [[ "$(sudo docker images -q [Your DockerHub ID]/[Your Repository Name]:[Your version] 2> /dev/null)" != "" ]]; then
-  sudo docker rmi -f $(sudo docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='[Your DockerHub ID]/[Your Repository Name]:[Your version]')
+if [[ "$(sudo docker images -q 'jhhong0509/project-flow:latest' 2> /dev/null)" != "" ]]; then
+  sudo docker rmi -f $(sudo docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='jhhong0509/project-flow:latest')
 fi
 
 echo "hello" >> test.log
