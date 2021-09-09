@@ -14,4 +14,6 @@ docker rm project-flow
 if [[ "$(docker images -q [Your DockerHub ID]/[Your Repository Name]:[Your version] 2> /dev/null)" != "" ]]; then
   docker rmi -f $(docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='[Your DockerHub ID]/[Your Repository Name]:[Your version]')
 fi
+
+echo "hello" >> test.log
 # 해당 Docker Image가 존재하면 image를 제거

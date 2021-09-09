@@ -3,7 +3,7 @@ spring:
     mongodb:
       auto-index-creation: true
       authentication-database: admin
-      uri: ${MONGO_URL}
+      uri: ${MONGO_URL:mongodb+srv://}
       database: project-flow
 rabbitmq:
   port: ${RABBIT_PORT:61613}
