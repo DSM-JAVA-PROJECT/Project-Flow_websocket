@@ -1,4 +1,5 @@
 sudo docker pull jhhong0509/project-flow:latest
+source /home/ubuntu/.bash_profile
 sudo docker run -d -p 8080:8080 --name project-flow \
     -e MONGO_URL="$MONGO_URL" \
     -e SECRET_KEY="$SECRET_KEY" \
