@@ -12,7 +12,7 @@ phases:   # github action의 jobs와 비슷한 의미
         --build-arg $RABBIT_PORT \
         --build-arg $RABBIT_USERNAME \
         --build-arg $RABBIT_PASSWORD \
-        --build-arg $SECRET_KEY
+        --build-arg $SECRET_KEY .
       - "docker tag project-flow-image jhhong0509/project-flow:latest"
 
   pre_build:
