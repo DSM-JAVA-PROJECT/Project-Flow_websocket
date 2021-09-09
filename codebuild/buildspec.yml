@@ -7,7 +7,7 @@ phases:   # github action의 jobs와 비슷한 의미
       - chmod +x ./gradlew
       - ./gradlew build
       - docker build -t project-flow-image .
-      - "docker tag project-flow-image project-flow-image:latest"
+      - "docker tag jhhong0509/project-flow-image jhhong0509/project-flow-image:latest"
 
   pre_build:
     commands:
@@ -15,7 +15,7 @@ phases:   # github action의 jobs와 비슷한 의미
 
   post_build:
     commands:
-      - "docker push project-flow-image:latest"
+      - "docker push jhhong0509/project-flow-image:latest"
 
 artifacts:    # artifact 설정
   files:      # appspec 파일 설정, 어떤 파일을 가져갈지 선택
