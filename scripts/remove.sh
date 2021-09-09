@@ -7,12 +7,12 @@
 #mkdir -vp /home/ubuntu/build
 # 다시 새로운 /home/ubuntu/build 디렉토리를 생성합니다.
 
-docker stop project-flow
-docker rm project-flow
+sudo docker stop project-flow
+sudo docker rm project-flow
 # Docker Container를 중지 및 제거
 
-if [[ "$(docker images -q [Your DockerHub ID]/[Your Repository Name]:[Your version] 2> /dev/null)" != "" ]]; then
-  docker rmi -f $(docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='[Your DockerHub ID]/[Your Repository Name]:[Your version]')
+if [[ "$(sudo docker images -q [Your DockerHub ID]/[Your Repository Name]:[Your version] 2> /dev/null)" != "" ]]; then
+  sudo docker rmi -f $(sudo docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='[Your DockerHub ID]/[Your Repository Name]:[Your version]')
 fi
 
 echo "hello" >> test.log
