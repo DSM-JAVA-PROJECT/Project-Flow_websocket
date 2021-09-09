@@ -18,9 +18,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${rabbitmq.password}")
     private String password;
 
-    @Value("${rabbitmq.port}")
-    private int port;
-
     @Value("${rabbitmq.username}")
     private String username;
 
