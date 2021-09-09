@@ -7,7 +7,7 @@ phases:   # github action의 jobs와 비슷한 의미
       - chmod +x ./gradlew
       - ./gradlew build
       - echo $MONGO_URL
-      - docker build -t project-flow-image --build-arg MONGO_URL=test --build-arg RABBIT_HOST=$RABBIT_HOST --build-arg RABBIT_PORT=$RABBIT_PORT --build-arg RABBIT_USERNAME=$RABBIT_USERNAME --build-arg RABBIT_PASSWORD=$RABBIT_PASSWORD --build-arg SECRET_KEY$SECRET_KEY .
+      - docker build -t project-flow-image --build-arg MONGO_URL=$MONGO_URL --build-arg RABBIT_HOST=$RABBIT_HOST --build-arg RABBIT_PORT=$RABBIT_PORT --build-arg RABBIT_USERNAME=$RABBIT_USERNAME --build-arg RABBIT_PASSWORD=$RABBIT_PASSWORD --build-arg SECRET_KEY=$SECRET_KEY .
       - "docker tag project-flow-image jhhong0509/project-flow:latest"
 
   pre_build:
