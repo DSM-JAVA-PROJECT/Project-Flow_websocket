@@ -6,15 +6,14 @@ phases:   # github action의 jobs와 비슷한 의미
       - echo Build Starting on `date`
       - chmod +x ./gradlew
       - ./gradlew build
-
-  pre-upload:
-    commands:
-      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-  build-docker:
-    commands:
       - docker build -t project-flow-image
       - "docker tag project-flow-image project-flow-image:latest"
-  post-upload:
+
+  pre_build:
+    commands:
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+
+  post_build:
     commands:
       - "docker push project-flow-image:latest"
 
