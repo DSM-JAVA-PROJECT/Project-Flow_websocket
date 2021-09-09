@@ -14,6 +14,4 @@ sudo docker rm project-flow
 if [[ "$(sudo docker images -q 'jhhong0509/project-flow:latest' 2> /dev/null)" != "" ]]; then
   sudo docker rmi -f $(sudo docker images --format '{{.Repository}}:{{.Tag}}' --filter=reference='jhhong0509/project-flow:latest')
 fi
-
-echo "hello" >> test.log
 # 해당 Docker Image가 존재하면 image를 제거
