@@ -1,4 +1,4 @@
-package com.projectflow.projectflowwebsocket.global.websocket;
+package com.projectflow.projectflowwebsocket.global.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class MvcSocketConfigurer extends WebSecurityConfigurerAdapter {
+public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
