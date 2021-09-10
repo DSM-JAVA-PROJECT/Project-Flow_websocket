@@ -1,4 +1,4 @@
-package com.projectflow.projectflowwebsocket.global.security;
+package com.projectflow.projectflowwebsocket.global.security.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
