@@ -23,18 +23,18 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/websocket").setAllowedOrigins("*");
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setPathMatcher(new AntPathMatcher("."));       // endpoint 가 adf.asf.adf 와 같이 .으로 구분될 수 있도록 설정
-        registry.enableSimpleBroker("/topic");      // in memory topic 을 사용.
-//        registry.enableStompBrokerRelay("/topic")       // 외부 MQ 사용 설정
-//                .setRelayHost(host)
-//                .setRelayPort(61613)                                    // rabbitMQ 에서 STOMP plugin 포트는 61613
-//                .setClientLogin(username)
-//                .setClientPasscode(password);
+//        registry.enableSimpleBroker("/topic");      // in memory topic 을 사용.
+        registry.enableStompBrokerRelay("/topic")       // 외부 MQ 사용 설정
+                .setRelayHost(host)
+                .setRelayPort(61613)                                    // rabbitMQ 에서 STOMP plugin 포트는 61613
+                .setClientLogin(username)
+                .setClientPasscode(password);
     }
 
 }
