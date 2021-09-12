@@ -1,6 +1,7 @@
 package com.projectflow.projectflowwebsocket.domain.user.entity;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -16,6 +17,7 @@ public class User {
     @MongoId
     private String id;
 
+    @Indexed(unique = true)
     @NotBlank
     private String email;
 
