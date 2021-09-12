@@ -20,8 +20,9 @@ public class StompInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel messageChannel) {      // 메세지들이 통과하는 interceptor 로, send 이전에 거쳐간다.
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);       // Message 에서 Header 추출
-        if (StompCommand.CONNECT == accessor.getCommand() &&
-                jwtValidator.isValid(accessor.getFirstNativeHeader("Authorization"))) {        // 만약 연결 요청이고 토큰이 유효하지 않다면
+        boolean isValid = jwtValidator.isValid(accessor.getFirstNativeHeader("Authorization"));
+        boolean isConnect = StompCommand.CONNECT == accessor.getCommand();
+        if (isConnect && !isValid) {        // 만약 연결 요청이고 토큰이 유효하지 않다면
             throw new InvalidTokenException();
         }
         return message;
