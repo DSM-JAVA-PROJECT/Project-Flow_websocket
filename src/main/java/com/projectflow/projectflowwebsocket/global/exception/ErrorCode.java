@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
+    AUTH_USER_NOT_FOUND(404, "Auth User Not Found"),
     INVALID_TOKEN(401, "Invalid Token");
 
     private final int status;
