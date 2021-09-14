@@ -13,8 +13,16 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
     @Override
     public User getCurrentUser() {
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(userEmail)
+        return userRepository.findByEmail(getEmail())
                 .orElseThrow(() -> AuthUserNotFoundException.EXCEPTION);
+    }
+
+    @Override
+    public String getCurrentEmail() {
+        return getEmail();
+    }
+
+    private String getEmail() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
