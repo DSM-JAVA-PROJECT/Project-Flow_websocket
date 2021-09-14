@@ -4,6 +4,7 @@ import com.projectflow.projectflowwebsocket.domain.plan.entity.Plan;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@Document(collation = "chatroom")
 public class ChatRoom {
 
     @MongoId
