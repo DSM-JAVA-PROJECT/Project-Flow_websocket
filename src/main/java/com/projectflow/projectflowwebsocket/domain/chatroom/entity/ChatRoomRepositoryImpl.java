@@ -18,7 +18,7 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepository {
     public void saveChatRoom(String projectId, ChatRoom chatRoom) {
         mongoTemplate.updateFirst(query(where("project.id").is(projectId)), // project.id 가 projectId 인 Document 검색
                 new Update().push("chatRooms").value(chatRoom),     // chatRooms 라는 collection 에 chatRoom Document 추가
-                "chatRooms");                               // 이게 뭘까요
+                ChatRoom.class);
     }
 
     @Override
@@ -26,6 +26,20 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepository {
         return mongoTemplate.exists(query(where("project.id").is(projectId)
                         .elemMatch(where("projectUsers.userId").is(user.getId()))),
                 ProjectUser.class);
+    }
+
+    @Override
+    public void joinChatRoom(String chatRoomId, User user) {
+        mongoTemplate.updateFirst(query(where("chatroom.id").is(chatRoomId)),
+                new Update().push("userIds", user),
+                User.class);
+    }
+
+    @Override
+    public boolean isChatRoomMember(String chatRoomId, User user) {
+        return mongoTemplate.exists(query(where("chatroom.id").is(chatRoomId)
+                        .elemMatch(where("userIds.id").is(user.getId()))),
+                ChatRoom.class);
     }
 
 }

@@ -19,4 +19,11 @@ public class ChatRoomController {
                               @Payload CreateChatRoomRequest request) {
         return chatRoomService.createChatRoom(projectId, request);
     }
+
+    @MessageMapping("/join/chatroom/{chatRoomId}")
+    public int createChatRoom(@DestinationVariable String chatRoomId) {
+        return chatRoomService.joinChatRoom(chatRoomId);
+    }
+
+
 }
