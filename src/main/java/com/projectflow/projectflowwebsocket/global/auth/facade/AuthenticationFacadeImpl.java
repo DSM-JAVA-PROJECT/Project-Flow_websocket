@@ -5,7 +5,9 @@ import com.projectflow.projectflowwebsocket.domain.user.entity.UserRepository;
 import com.projectflow.projectflowwebsocket.global.auth.exceptions.AuthUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class AuthenticationFacadeImpl implements AuthenticationFacade {
 
