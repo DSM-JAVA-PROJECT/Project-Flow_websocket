@@ -51,6 +51,9 @@ dependencies {
 
     // netty
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
+
+    // valitation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 test {
