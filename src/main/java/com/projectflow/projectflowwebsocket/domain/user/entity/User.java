@@ -1,11 +1,14 @@
 package com.projectflow.projectflowwebsocket.domain.user.entity;
 
+import com.projectflow.projectflowwebsocket.domain.project.entity.Project;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -31,4 +34,8 @@ public class User {
 
     @NotBlank
     private String phoneNumber;
+
+    @DBRef(lazy = true)
+    private List<Project> projects;
+
 }
