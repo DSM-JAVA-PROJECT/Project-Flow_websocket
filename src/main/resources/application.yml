@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      auto-index-creation: true
+      auto-index-creation: false
       authentication-database: admin
       uri: ${MONGO_URL}
       database: project-flow
