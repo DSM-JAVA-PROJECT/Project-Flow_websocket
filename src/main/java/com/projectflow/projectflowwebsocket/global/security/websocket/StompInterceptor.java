@@ -27,8 +27,9 @@ public class StompInterceptor implements ChannelInterceptor {
         if (isConnect && authentication == null) {        // 만약 연결 요청이고 토큰이 유효하지 않다면
             SecurityContextHolder.clearContext();
             throw InvalidTokenException.EXCEPTION;
+        } else {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         return message;
     }
 }
