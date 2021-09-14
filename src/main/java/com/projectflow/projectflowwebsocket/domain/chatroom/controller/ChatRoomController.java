@@ -25,5 +25,4 @@ public class ChatRoomController {
         return chatRoomService.joinChatRoom(chatRoomId);
     }
 
-
 }

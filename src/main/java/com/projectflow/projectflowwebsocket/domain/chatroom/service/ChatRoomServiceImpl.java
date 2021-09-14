@@ -8,9 +8,11 @@ import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRo
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class ChatRoomServiceImpl implements ChatRoomService {
 
