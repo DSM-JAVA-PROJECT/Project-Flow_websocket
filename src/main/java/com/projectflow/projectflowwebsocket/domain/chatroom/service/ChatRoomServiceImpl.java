@@ -2,6 +2,7 @@ package com.projectflow.projectflowwebsocket.domain.chatroom.service;
 
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoomRepository;
+import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.NotChatRoomMemberException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
@@ -18,7 +19,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public String createChatRoom(String projectId, CreateChatRoomRequest request) {
         User user = authenticationFacade.getCurrentUser();
-        chatRoomRepository.isProjectMember(user, projectId);
+        if(!chatRoomRepository.isProjectMember(user, projectId)) {
+            throw NotChatRoomMemberException.EXCEPTION;
+        }
         chatRoomRepository.saveChatRoom(projectId, buildChatRoom(request, user));
         return "created";
     }

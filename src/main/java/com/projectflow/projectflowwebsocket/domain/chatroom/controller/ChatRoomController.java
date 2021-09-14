@@ -2,7 +2,6 @@ package com.projectflow.projectflowwebsocket.domain.chatroom.controller;
 
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.chatroom.service.ChatRoomService;
-import com.projectflow.projectflowwebsocket.domain.chatroom.service.ChatRoomServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
 
     AUTH_USER_NOT_FOUND(404, "Auth User Not Found"),
+    USER_NOT_MEMBER(403, "User Not Member of Project"),
     INVALID_TOKEN(401, "Invalid Token");
 
     private final int status;
