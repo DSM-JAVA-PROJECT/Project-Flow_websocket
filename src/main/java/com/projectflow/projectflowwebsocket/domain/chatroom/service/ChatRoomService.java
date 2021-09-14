@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ChatRoomService {
-    String createChatRoom(String projectId, CreateChatRoomRequest request);
+    int createChatRoom(String projectId, CreateChatRoomRequest request);
 }

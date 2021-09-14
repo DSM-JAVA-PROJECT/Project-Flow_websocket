@@ -17,13 +17,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private final AuthenticationFacade authenticationFacade;
 
     @Override
-    public String createChatRoom(String projectId, CreateChatRoomRequest request) {
+    public int createChatRoom(String projectId, CreateChatRoomRequest request) {
         User user = authenticationFacade.getCurrentUser();
         if(!chatRoomRepository.isProjectMember(user, projectId)) {
             throw NotChatRoomMemberException.EXCEPTION;
         }
         chatRoomRepository.saveChatRoom(projectId, buildChatRoom(request, user));
-        return "created";
+        return 201;
     }
 
     private ChatRoom buildChatRoom(CreateChatRoomRequest request, User user) {

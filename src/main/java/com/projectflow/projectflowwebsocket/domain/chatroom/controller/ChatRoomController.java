@@ -15,8 +15,8 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @MessageMapping("/create/chatroom/{projectId}")
-    public String createChatRoom(@DestinationVariable String projectId,
-                                 @Payload CreateChatRoomRequest request) {
+    public int createChatRoom(@DestinationVariable String projectId,
+                              @Payload CreateChatRoomRequest request) {
         return chatRoomService.createChatRoom(projectId, request);
     }
 }
