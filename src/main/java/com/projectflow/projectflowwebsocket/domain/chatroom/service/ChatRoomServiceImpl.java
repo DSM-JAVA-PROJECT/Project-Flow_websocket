@@ -26,7 +26,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Transactional
     @Override
-    public int createChatRoom(String projectId, CreateChatRoomRequest request) {
+    public ChatRoom createChatRoom(String projectId, CreateChatRoomRequest request) {
         User user = authenticationFacade.getCurrentUser();
         if (!chatRoomRepository.isProjectMember(user, projectId)) {
             throw NotChatRoomMemberException.EXCEPTION;
@@ -37,17 +37,16 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         ChatRoom chatRoom = chatRoomRepository.save(unsavedChatRoom);
         project.getChatRooms().add(chatRoom);
         projectRepository.save(project);
-        return 201;
+        return chatRoom;
     }
 
     @Override
-    public int joinChatRoom(String chatRoomId) {
+    public String joinChatRoom(String chatRoomId) {
         User user = authenticationFacade.getCurrentUser();
         if (chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
             throw ChatRoomAlreadyParticipatedException.EXCEPTION;
         }
-        chatRoomRepository.joinChatRoom(chatRoomId, user);
-        return 201;
+        return chatRoomRepository.joinChatRoom(chatRoomId, user);
     }
 
     private ChatRoom buildChatRoom(CreateChatRoomRequest request, User user) {
