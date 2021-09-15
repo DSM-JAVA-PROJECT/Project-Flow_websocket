@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 public class Plan {
 
     @MongoId
@@ -33,4 +33,12 @@ public class Plan {
     @DBRef(lazy = true)
     private List<PlanUser> planUsers;
 
+    @Builder
+    public Plan(String name, LocalDate endDate, LocalDate startDate, LocalDate finishDate) {
+        this.name = name;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.planUsers = new ArrayList<>();
+    }
 }

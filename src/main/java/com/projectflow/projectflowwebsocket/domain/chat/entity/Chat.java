@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Document(collation = "chat")
 public class Chat {
 
@@ -37,4 +36,11 @@ public class Chat {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Builder
+    public Chat(String message, User sender, ChatRoom chatRoom, List<User> receiver) {
+        this.message = message;
+        this.sender = sender;
+        this.chatRoom = chatRoom;
+        this.receiver = receiver;
+    }
 }

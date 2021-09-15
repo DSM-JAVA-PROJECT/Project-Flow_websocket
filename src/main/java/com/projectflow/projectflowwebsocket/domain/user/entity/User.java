@@ -8,12 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Document(collation = "user")
 public class User {
 
@@ -37,5 +37,15 @@ public class User {
 
     @DBRef(lazy = true)
     private List<Project> projects;
+
+    @Builder
+    public User(String email, String name, String password, String profileImage, String phoneNumber) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.profileImage = profileImage;
+        this.phoneNumber = phoneNumber;
+        this.projects = new ArrayList<>();
+    }
 
 }

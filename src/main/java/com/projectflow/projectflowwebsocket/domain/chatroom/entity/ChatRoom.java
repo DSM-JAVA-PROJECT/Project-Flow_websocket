@@ -5,15 +5,16 @@ import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
 @Document(collation = "chatroom")
 public class ChatRoom {
 
@@ -29,4 +30,10 @@ public class ChatRoom {
     @DBRef(lazy = true)
     private List<Plan> plans;
 
+    @Builder
+    public ChatRoom(String name, List<User> userIds) {
+        this.name = name;
+        this.userIds = userIds;
+        this.plans = new ArrayList<>();
+    }
 }
