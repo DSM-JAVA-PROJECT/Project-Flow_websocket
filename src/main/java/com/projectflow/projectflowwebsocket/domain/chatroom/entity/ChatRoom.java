@@ -14,7 +14,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Document(collation = "chatroom")
 public class ChatRoom {
 
@@ -31,7 +30,7 @@ public class ChatRoom {
     private List<Plan> plans;
 
     @Builder
-    public ChatRoom(String name, List<User> userIds) {
+    private ChatRoom(String name, List<User> userIds) {
         this.name = name;
         this.userIds = userIds;
         this.plans = new ArrayList<>();

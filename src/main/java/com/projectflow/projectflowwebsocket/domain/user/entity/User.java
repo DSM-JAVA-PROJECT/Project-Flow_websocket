@@ -13,7 +13,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Document(collation = "user")
 public class User {
 
@@ -39,7 +38,7 @@ public class User {
     private List<Project> projects;
 
     @Builder
-    public User(String email, String name, String password, String profileImage, String phoneNumber) {
+    private User(String email, String name, String password, String profileImage, String phoneNumber) {
         this.email = email;
         this.name = name;
         this.password = password;

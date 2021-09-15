@@ -15,7 +15,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Document(collation = "project")
 public class Project {
 
@@ -52,7 +51,7 @@ public class Project {
     private User pm;
 
     @Builder
-    public Project(String projectName, String title, String explanation, LocalDate startDate, LocalDate endDate, String logoImage, User pm) {
+    private Project(String projectName, String title, String explanation, LocalDate startDate, LocalDate endDate, String logoImage, User pm) {
         this.projectName = projectName;
         this.title = title;
         this.explanation = explanation;

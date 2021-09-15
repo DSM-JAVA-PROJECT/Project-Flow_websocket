@@ -12,7 +12,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Plan {
 
     @MongoId
@@ -34,7 +33,7 @@ public class Plan {
     private List<PlanUser> planUsers;
 
     @Builder
-    public Plan(String name, LocalDate endDate, LocalDate startDate, LocalDate finishDate) {
+    private Plan(String name, LocalDate endDate, LocalDate startDate, LocalDate finishDate) {
         this.name = name;
         this.endDate = endDate;
         this.startDate = startDate;
