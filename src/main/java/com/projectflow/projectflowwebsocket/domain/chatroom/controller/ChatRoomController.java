@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -23,6 +24,11 @@ public class ChatRoomController {
     @MessageMapping("/join/chatroom/{chatRoomId}")
     public int createChatRoom(@DestinationVariable String chatRoomId) {
         return chatRoomService.joinChatRoom(chatRoomId);
+    }
+
+    @MessageMapping("/list/chatroom/{projectId}")
+    public int chatRoomList(@DestinationVariable String chatRoomId) {
+        return 0;
     }
 
 }
