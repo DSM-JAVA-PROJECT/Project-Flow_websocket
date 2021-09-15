@@ -7,7 +7,7 @@ public interface CustomChatRoomRepository {
 
     boolean isProjectMember(User user, String projectId);
 
-    void joinChatRoom(String chatRoomId, User user);
+    String joinChatRoom(String chatRoomId, User user);
 
     boolean isChatRoomMember(String chatRoomId, User user);
 }

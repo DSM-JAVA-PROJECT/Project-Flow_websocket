@@ -21,10 +21,11 @@ public class CustomChatRoomRepositoryImpl implements CustomChatRoomRepository {
     }
 
     @Override
-    public void joinChatRoom(String chatRoomId, User user) {
-        mongoTemplate.upsert(query(where("chatroom.id").is(chatRoomId)),
-                new Update().push("userIds", user),
-                "userIds");
+    public String joinChatRoom(String chatRoomId, User user) {
+        return mongoTemplate.upsert(query(where("chatroom.id").is(chatRoomId)),
+                        new Update().push("userIds", user),
+                        "userIds")
+                .getUpsertedId().asString().getValue();
     }
 
     @Override
