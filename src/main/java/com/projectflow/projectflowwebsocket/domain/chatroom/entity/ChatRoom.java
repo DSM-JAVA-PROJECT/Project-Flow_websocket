@@ -2,9 +2,11 @@ package com.projectflow.projectflowwebsocket.domain.chatroom.entity;
 
 import com.projectflow.projectflowwebsocket.domain.plan.entity.Plan;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
-import com.querydsl.core.annotations.QueryEntity;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -13,12 +15,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@QueryEntity
 @Document(collection = "chatroom")
 public class ChatRoom {
 
     @MongoId
-    private String id;
+    private ObjectId id;
 
     @NotBlank
     private String name;
