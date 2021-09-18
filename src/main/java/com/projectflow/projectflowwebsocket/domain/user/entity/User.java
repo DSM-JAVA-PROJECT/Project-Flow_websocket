@@ -13,7 +13,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Document(collation = "user")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Document(collection = "user")
 public class User {
 
     @MongoId

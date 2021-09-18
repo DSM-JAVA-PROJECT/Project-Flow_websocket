@@ -29,7 +29,6 @@ public class Plan {
     @NotNull
     private LocalDate finishDate;
 
-    @DBRef(lazy = true)
     private List<PlanUser> planUsers;
 
     @Builder

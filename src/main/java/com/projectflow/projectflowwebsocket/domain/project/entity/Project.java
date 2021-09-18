@@ -15,7 +15,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Document(collation = "project")
+@Document(collection = "project")
 public class Project {
 
     @MongoId
@@ -41,7 +41,6 @@ public class Project {
     @DBRef(lazy = true)
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
-    @DBRef(lazy = true)
     private List<ProjectUser> projectUsers = new ArrayList<>();
 
     private boolean isFinished;
