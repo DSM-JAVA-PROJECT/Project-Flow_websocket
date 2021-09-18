@@ -46,8 +46,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    // queryDsl
+    implementation 'com.querydsl:querydsl-mongodb'
+    implementation 'com.querydsl:querydsl-apt'
+
     // mongodb
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+//    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 
     // netty
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
