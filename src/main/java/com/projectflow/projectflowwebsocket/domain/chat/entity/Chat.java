@@ -14,7 +14,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Document(collation = "chat")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Document(collection = "chat")
 public class Chat {
 
     @MongoId
