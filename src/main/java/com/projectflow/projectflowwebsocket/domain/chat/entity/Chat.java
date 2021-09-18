@@ -3,6 +3,7 @@ package com.projectflow.projectflowwebsocket.domain.chat.entity;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +20,7 @@ import java.util.List;
 public class Chat {
 
     @MongoId
-    private String id;
+    private ObjectId id;
 
     @NotBlank
     private String message;
