@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -97,15 +96,13 @@ class ChatRoomRepositoryTest {
 
     @Test
     void 미참가_여부_테스트() {
-        mongoTemplate.findAll(ChatRoom.class)
-                .forEach(chatRoom1 -> System.out.println(chatRoom1.getId()));
-        assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId(), user)).isFalse();
+        assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId().toString(), user2)).isFalse();
     }
 
     @Test
     void 참가_테스트() {
-        System.out.println("hi");
-        assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId(), user)).isTrue();
+        chatRoomRepository.joinChatRoom(chatRoom.getId().toString(), user2);
+        assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId().toString(), user2)).isTrue();
     }
 
 }
