@@ -33,9 +33,11 @@ public class ChatRoomController {
         return 200;
     }
 
-    @MessageMapping("/list/chatroom/{projectId}")
-    public int chatRoomList(@DestinationVariable String chatRoomId) {
-        return 0;
+    @MessageMapping("/resign/chatroom/{chatRoomId}")
+    public int resign(@DestinationVariable String chatRoomId) {
+        String roomId = chatRoomService.joinChatRoom(chatRoomId);
+        messageService.sendJoinMessage(roomId);
+        return 200;
     }
 
 }
