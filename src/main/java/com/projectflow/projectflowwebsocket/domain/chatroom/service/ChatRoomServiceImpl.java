@@ -49,6 +49,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return chatRoomRepository.joinChatRoom(chatRoomId, user);
     }
 
+    @Override
+    public void resignChatRoom(String chatRoomId) {
+        User user = authenticationFacade.getCurrentUser();
+        if (!chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
+            throw NotChatRoomMemberException.EXCEPTION;
+        }
+//        chatRoomRepository.delete
+    }
+
     private ChatRoom buildChatRoom(CreateChatRoomRequest request, User user) {
         return ChatRoom.builder()
                 .name(request.getName())

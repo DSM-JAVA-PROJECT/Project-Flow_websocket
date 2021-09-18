@@ -5,6 +5,6 @@ import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRo
 
 public interface ChatRoomService {
     ChatRoom createChatRoom(String projectId, CreateChatRoomRequest request);
-
     String joinChatRoom(String chatRoomId);
+    void resignChatRoom(String chatRoomId);
 }
