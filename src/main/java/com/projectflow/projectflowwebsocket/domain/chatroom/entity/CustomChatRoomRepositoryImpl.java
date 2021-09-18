@@ -1,5 +1,6 @@
 package com.projectflow.projectflowwebsocket.domain.chatroom.entity;
 
+import com.mongodb.DBRef;
 import com.projectflow.projectflowwebsocket.domain.project.entity.Project;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -27,24 +28,21 @@ public class CustomChatRoomRepositoryImpl implements CustomChatRoomRepository {
 
     @Override
     public String joinChatRoom(String chatRoomId, User user) {
-        return mongoTemplate.upsert(query(where("_id").is(getObjectId(chatRoomId))),
+        return mongoTemplate.findAndModify(query(where("_id").is(chatRoomId)),
                 new Update().push("userIds", user),
-                ChatRoom.class).getUpsertedId().asString().getValue();
+                ChatRoom.class).getId().toString();
     }
 
     @Override
     public boolean isChatRoomMember(String chatRoomId, User user) {
-        return mongoTemplate.findOne(query(where("_id").is(getObjectId(chatRoomId))),
+        return mongoTemplate.findOne(query(where("_id").is(chatRoomId)
+                        .andOperator(where("userIds.$id").is(user.getId()))),   // userIds 의 id 요소가 user.getId인 요소 find
                 ChatRoom.class) != null;
     }
 
     @Override
     public void deleteMember(String chatRoomId, String userId) {
 //        mongoTemplate.remove(query(where("chat")))
-    }
-
-    private ObjectId getObjectId(String id) {
-        return new ObjectId(id);
     }
 
 }
