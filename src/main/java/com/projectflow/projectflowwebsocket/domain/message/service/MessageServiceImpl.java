@@ -19,7 +19,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void sendCreateChatRoomMessage(String projectId, ChatRoom chatRoom) {
         var message = CreateChatRoomMessage.builder()
-                .id(chatRoom.getId())
+                .id(chatRoom.getId().toString())
                 .roomName(chatRoom.getName())
                 .build();
         chatRoom.getUserIds()

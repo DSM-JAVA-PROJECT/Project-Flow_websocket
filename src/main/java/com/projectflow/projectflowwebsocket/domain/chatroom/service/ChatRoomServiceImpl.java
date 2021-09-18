@@ -11,6 +11,7 @@ import com.projectflow.projectflowwebsocket.domain.project.entity.ProjectReposit
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
