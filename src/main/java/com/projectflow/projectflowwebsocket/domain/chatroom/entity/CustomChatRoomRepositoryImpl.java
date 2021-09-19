@@ -41,8 +41,10 @@ public class CustomChatRoomRepositoryImpl implements CustomChatRoomRepository {
     }
 
     @Override
-    public void deleteMember(String chatRoomId, String userId) {
-//        mongoTemplate.remove(query(where("chat")))
+    public void deleteMember(String chatRoomId, User user) {
+        mongoTemplate.remove(query(where("_id").is(chatRoomId)
+                .andOperator(where("userIds.$id").is(user.getId()))),
+                ChatRoom.class);
     }
 
 }

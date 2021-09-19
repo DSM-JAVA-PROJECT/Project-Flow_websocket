@@ -10,6 +10,6 @@ public interface CustomChatRoomRepository {
 
     boolean isChatRoomMember(String chatRoomId, User user);
 
-    void deleteMember(String chatRoomId, String userId);
+    void deleteMember(String chatRoomId, User user);
 
 }
