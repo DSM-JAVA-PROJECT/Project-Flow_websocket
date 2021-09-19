@@ -3,6 +3,7 @@ package com.projectflow.projectflowwebsocket.domain.message.service;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.message.payload.CreateChatRoomMessage;
 import com.projectflow.projectflowwebsocket.domain.message.payload.JoinChatRoomMessage;
+import com.projectflow.projectflowwebsocket.domain.message.payload.ResignChatRoomMessage;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MessageServiceImpl implements MessageService {
                 .roomName(chatRoom.getName())
                 .build();
         chatRoom.getUserIds()
-                .forEach(user -> template.convertAndSendToUser(user.getEmail(), "/chatroom/" + projectId, message));
+                .forEach(user -> template.convertAndSendToUser(user.getEmail(), "/topic/chatroom/" + projectId, message));
     }
 
     @Override
@@ -31,7 +32,15 @@ public class MessageServiceImpl implements MessageService {
         var message = JoinChatRoomMessage.builder()
                 .userId(authenticationFacade.getCurrentEmail())
                 .build();
-        template.convertAndSend("/chatroom/" + chatRoomId, message);
+        template.convertAndSend("/topic/chatroom/" + chatRoomId, message);
+    }
+
+    @Override
+    public void sendResignMessage(String chatRoomId) {
+        var message = ResignChatRoomMessage.builder()
+                .userId(authenticationFacade.getCurrentEmail())
+                .build();
+        template.convertAndSend("/topic/chatroom/" + chatRoomId, message);
     }
 
 }
