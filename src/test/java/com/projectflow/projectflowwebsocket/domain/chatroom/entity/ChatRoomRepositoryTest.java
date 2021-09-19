@@ -104,4 +104,10 @@ class ChatRoomRepositoryTest {
         assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId().toString(), user2)).isTrue();
     }
 
+    @Test
+    void 탈퇴_테스트() {
+        chatRoomRepository.deleteMember(chatRoom.getId().toString(), user2);
+        assertThat(chatRoomRepository.isChatRoomMember(chatRoom.getId().toString(), user2)).isFalse();
+    }
+
 }
