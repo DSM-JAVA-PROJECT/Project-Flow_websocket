@@ -28,15 +28,15 @@ public class ChatRoomController {
 
     @MessageMapping("/join/chatroom/{chatRoomId}")
     public int joinChatRoom(@DestinationVariable String chatRoomId) {
-        String roomId = chatRoomService.joinChatRoom(chatRoomId);
-        messageService.sendJoinMessage(roomId);
+        chatRoomService.joinChatRoom(chatRoomId);
+        messageService.sendJoinMessage(chatRoomId);
         return 200;
     }
 
     @MessageMapping("/resign/chatroom/{chatRoomId}")
     public int resign(@DestinationVariable String chatRoomId) {
-        String roomId = chatRoomService.joinChatRoom(chatRoomId);
-        messageService.sendJoinMessage(roomId);
+        chatRoomService.resignChatRoom(chatRoomId);
+        messageService.sendResignMessage(chatRoomId);
         return 200;
     }
 

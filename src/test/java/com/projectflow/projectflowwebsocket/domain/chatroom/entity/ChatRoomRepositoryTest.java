@@ -4,7 +4,6 @@ import com.projectflow.projectflowwebsocket.domain.project.entity.Project;
 import com.projectflow.projectflowwebsocket.domain.project.entity.ProjectRepository;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.domain.user.entity.UserRepository;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,9 +79,9 @@ class ChatRoomRepositoryTest {
 
     @AfterEach
     void cleanUp() {
-//        mongoTemplate.remove(new Query(), Project.class);
-//        mongoTemplate.remove(new Query(), ChatRoom.class);
-//        mongoTemplate.remove(new Query(), User.class);
+        mongoTemplate.remove(new Query(), Project.class);
+        mongoTemplate.remove(new Query(), ChatRoom.class);
+        mongoTemplate.remove(new Query(), User.class);
     }
 
     @Test
