@@ -1,2 +1,4 @@
 # Project-Flow_websocket
 프로젝트 플로우 WebSocket 서버
+
+![Build Status](https://codebuild.ap-northeast-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiT29BcExCeEdtL1FRb3JUQnNqaGt0NGZaMXdRWnRLOXptcnV3M3JjUzZqOEQwelIvSXUya2lPNVVzd3BFMWMxcWZvVVk4aGw3MEVCbi9ZV2FDZ1Q3RDk4PSIsIml2UGFyYW1ldGVyU3BlYyI6IlhuUmk4Q3FzVENaTnR0RHIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
