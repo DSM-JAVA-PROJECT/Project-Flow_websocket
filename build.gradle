@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.projectflow'
@@ -46,8 +47,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    // queryDsl
+    implementation 'com.querydsl:querydsl-mongodb'
+    implementation 'com.querydsl:querydsl-apt'
+
+    annotationProcessor 'javax.annotation:javax.annotation-api'
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+
     // mongodb
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+//    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 
     // netty
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
@@ -62,4 +71,23 @@ test {
 
 tasks.jar {
     enabled = false
+}
+def querydslGeneratedDir = "$buildDir/generated/querydsl" as Object
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    springDataMongo = true
+    querydslSourcesDir = querydslGeneratedDir
+}
+
+sourceSets {
+    main.java.srcDir querydslGeneratedDir
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

@@ -3,6 +3,7 @@ package com.projectflow.projectflowwebsocket.domain.project.entity;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -10,17 +11,16 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
-@Document(collation = "project")
+@Document(collection = "project")
 public class Project {
 
     @MongoId
-    private String id;
+    private ObjectId id;
 
     @NotBlank
     private String projectName;
@@ -40,10 +40,9 @@ public class Project {
     private String logoImage;
 
     @DBRef(lazy = true)
-    private List<ChatRoom> chatRooms;
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 
-    @DBRef(lazy = true)
-    private List<ProjectUser> projectUsers;
+    private List<ProjectUser> projectUsers = new ArrayList<>();
 
     private boolean isFinished;
 
@@ -51,4 +50,17 @@ public class Project {
     @DBRef(lazy = true)
     private User pm;
 
+    @Builder
+    private Project(String projectName, String title, String explanation, LocalDate startDate, LocalDate endDate, String logoImage, User pm) {
+        this.projectName = projectName;
+        this.title = title;
+        this.explanation = explanation;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.logoImage = logoImage;
+        this.chatRooms = new ArrayList<>();
+        this.projectUsers = new ArrayList<>();
+        this.isFinished = false;
+        this.pm = pm;
+    }
 }

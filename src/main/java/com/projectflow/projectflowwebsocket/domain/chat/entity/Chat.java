@@ -3,6 +3,7 @@ package com.projectflow.projectflowwebsocket.domain.chat.entity;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,13 +15,12 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
-@Document(collation = "chat")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Document(collection = "chat")
 public class Chat {
 
     @MongoId
-    private String id;
+    private ObjectId id;
 
     @NotBlank
     private String message;
@@ -37,4 +37,11 @@ public class Chat {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Builder
+    private Chat(String message, User sender, ChatRoom chatRoom, List<User> receiver) {
+        this.message = message;
+        this.sender = sender;
+        this.chatRoom = chatRoom;
+        this.receiver = receiver;
+    }
 }
