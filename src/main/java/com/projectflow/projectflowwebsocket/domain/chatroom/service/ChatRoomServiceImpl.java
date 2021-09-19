@@ -32,7 +32,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         if (!chatRoomRepository.isProjectMember(user, projectId)) {
             throw NotChatRoomMemberException.EXCEPTION;
         }
-        Project project = projectRepository.findById(projectId)
+        Project project = projectRepository.findById(new ObjectId(projectId))
                 .orElseThrow(() -> ChatRoomNotFoundException.EXCEPTION);
         ChatRoom unsavedChatRoom = buildChatRoom(request, user);
         ChatRoom chatRoom = chatRoomRepository.save(unsavedChatRoom);
@@ -42,12 +42,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public String joinChatRoom(String chatRoomId) {
+    public void joinChatRoom(String chatRoomId) {
         User user = authenticationFacade.getCurrentUser();
         if (chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
             throw ChatRoomAlreadyParticipatedException.EXCEPTION;
         }
-        return chatRoomRepository.joinChatRoom(chatRoomId, user);
+        chatRoomRepository.joinChatRoom(chatRoomId, user);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         if (!chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
             throw NotChatRoomMemberException.EXCEPTION;
         }
-//        chatRoomRepository.delete
+        chatRoomRepository.deleteMember(chatRoomId, user);
     }
 
     private ChatRoom buildChatRoom(CreateChatRoomRequest request, User user) {
