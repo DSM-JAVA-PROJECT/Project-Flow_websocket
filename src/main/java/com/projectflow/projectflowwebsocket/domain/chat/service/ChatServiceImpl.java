@@ -41,6 +41,9 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void removeMessage(String chatId) {
+        User user = authenticationFacade.getCurrentUser();
+        messageIsMine(chatId, user);
+        chatRepository.deleteById(new ObjectId(chatId));
     }
 
     @Override
