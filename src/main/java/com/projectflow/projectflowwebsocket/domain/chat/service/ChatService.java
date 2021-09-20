@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ChatService {
     void saveMessage(String chatRoomId, ChatRequest request);
-    void removeMessage(String chatId);
+    String removeMessage(String chatId);
     OldChatMessageListResponse getOldChatMessage(String chatRoomId, Pageable pageable);
 }

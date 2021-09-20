@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -42,10 +43,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void removeMessage(String chatId) {
+    public String removeMessage(String chatId) {
         User user = authenticationFacade.getCurrentUser();
-        messageIsMine(chatId, user);
+        Chat chat = messageIsMine(chatId, user);
         chatRepository.deleteById(new ObjectId(chatId));
+        return chat.getChatRoom().getId().toString();
     }
 
     @Override
@@ -80,10 +82,9 @@ public class ChatServiceImpl implements ChatService {
         }
     }
 
-    private void messageIsMine(String chatId, User user) {
-        if (chatRepository.findByIdAndSender(new ObjectId(chatId), user).isEmpty()) {
-            throw UserNotMessageOwnerException.EXCEPTION;
-        }
+    private Chat messageIsMine(String chatId, User user) {
+        return chatRepository.findByIdAndSender(new ObjectId(chatId), user)
+                .orElseThrow(() -> UserNotMessageOwnerException.EXCEPTION);
     }
 
     private ChatRoom findChatRoomById(String chatRoomId) {
