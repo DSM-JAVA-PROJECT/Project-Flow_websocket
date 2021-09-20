@@ -11,9 +11,6 @@ import java.util.List;
 @Builder
 public class OldChatMessageResponse {
 
-    @Builder.Default
-    private MessageType messageType = MessageType.MESSAGE;
-
     private String id;
 
     private String message;
