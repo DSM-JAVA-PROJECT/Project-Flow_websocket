@@ -5,6 +5,7 @@ import com.projectflow.projectflowwebsocket.domain.chat.entity.ChatRepository;
 import com.projectflow.projectflowwebsocket.domain.chat.exceptions.UserNotMessageOwnerException;
 import com.projectflow.projectflowwebsocket.domain.chat.payload.ChatRequest;
 import com.projectflow.projectflowwebsocket.domain.chat.payload.OldChatMessageListResponse;
+import com.projectflow.projectflowwebsocket.domain.chat.payload.OldChatMessageResponse;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoomRepository;
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.ChatRoomNotFoundException;
@@ -13,9 +14,11 @@ import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -30,8 +33,7 @@ public class ChatServiceImpl implements ChatService {
         User user = authenticationFacade.getCurrentUser();
 
         validateChatRoom(chatRoomId, user);
-        ChatRoom chatRoom = chatRoomRepository.findById(new ObjectId(chatRoomId))
-                .orElseThrow(() -> ChatRoomNotFoundException.EXCEPTION);
+        ChatRoom chatRoom = findChatRoomById(chatRoomId);
 
         List<User> receivers = chatRoom.getUserIds();
         receivers.remove(user);
@@ -47,8 +49,25 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public OldChatMessageListResponse getOldChatMessage(Long page) {
-        return null;
+    public OldChatMessageListResponse getOldChatMessage(String chatRoomId, Pageable pageable) {
+        User user = authenticationFacade.getCurrentUser();
+        ChatRoom chatRoom = findChatRoomById(chatRoomId);
+        return new OldChatMessageListResponse(
+                chatRepository.findAllByChatRoomOrderByCreatedAtAsc(chatRoom, pageable)
+                        .map(chat -> buildResponse(chat, user)).getContent()
+        );
+    }
+
+    private OldChatMessageResponse buildResponse(Chat chat, User user) {
+        return OldChatMessageResponse.builder()
+                .cratedAt(chat.getCreatedAt())
+                .id(chat.getId().toString())
+                .isMine(user.equals(chat.getSender()))
+                .message(chat.getMessage())
+                .readerList(chat.getReceiver().stream().map(User::getEmail).collect(Collectors.toList()))
+                .senderImage(chat.getSender().getProfileImage())
+                .senderName(chat.getSender().getName())
+                .build();
     }
 
     private void validateChatRoom(String chatRoomId, User user) {
@@ -61,6 +80,11 @@ public class ChatServiceImpl implements ChatService {
         if (chatRepository.findByIdAndSender(chatId, user).isEmpty()) {
             throw UserNotMessageOwnerException.EXCEPTION;
         }
+    }
+
+    private ChatRoom findChatRoomById(String chatRoomId) {
+        return chatRoomRepository.findById(new ObjectId(chatRoomId))
+                .orElseThrow(() -> ChatRoomNotFoundException.EXCEPTION);
     }
 
     private Chat buildChat(ChatRoom chatRoom, User user, String message) {
