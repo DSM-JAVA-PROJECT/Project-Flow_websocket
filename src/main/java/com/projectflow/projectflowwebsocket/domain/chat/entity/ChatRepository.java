@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface ChatRepository extends MongoRepository<Chat, ObjectId> {
-    Optional<Chat> findByIdAndSender(String chatId, User user);
+    Optional<Chat> findByIdAndSender(ObjectId chatId, User user);
 
     Page<Chat> findAllByChatRoomOrderByCreatedAtAsc(ChatRoom chatRoom, Pageable pageable);
 }

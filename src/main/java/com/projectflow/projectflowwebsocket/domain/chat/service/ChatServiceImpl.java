@@ -77,7 +77,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     private void messageIsMine(String chatId, User user) {
-        if (chatRepository.findByIdAndSender(chatId, user).isEmpty()) {
+        if (chatRepository.findByIdAndSender(new ObjectId(chatId), user).isEmpty()) {
             throw UserNotMessageOwnerException.EXCEPTION;
         }
     }
