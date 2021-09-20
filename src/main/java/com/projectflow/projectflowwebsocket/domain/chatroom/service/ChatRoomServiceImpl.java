@@ -5,6 +5,7 @@ import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoomRepos
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.ChatRoomAlreadyParticipatedException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.ChatRoomNotFoundException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.NotChatRoomMemberException;
+import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.NotProjectMemberException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.project.entity.Project;
 import com.projectflow.projectflowwebsocket.domain.project.entity.ProjectRepository;
@@ -29,33 +30,31 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Override
     public ChatRoom createChatRoom(String projectId, CreateChatRoomRequest request) {
         User user = authenticationFacade.getCurrentUser();
-        if (!chatRoomRepository.isProjectMember(user, projectId)) {
-            throw NotChatRoomMemberException.EXCEPTION;
-        }
+        validateProjectMember(projectId, user);
+
         Project project = projectRepository.findById(new ObjectId(projectId))
                 .orElseThrow(() -> ChatRoomNotFoundException.EXCEPTION);
+
         ChatRoom unsavedChatRoom = buildChatRoom(request, user);
         ChatRoom chatRoom = chatRoomRepository.save(unsavedChatRoom);
+
         project.getChatRooms().add(chatRoom);
         projectRepository.save(project);
+
         return chatRoom;
     }
 
     @Override
     public void joinChatRoom(String chatRoomId) {
         User user = authenticationFacade.getCurrentUser();
-        if (chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
-            throw ChatRoomAlreadyParticipatedException.EXCEPTION;
-        }
+        validateNotChatRoomMember(chatRoomId, user);
         chatRoomRepository.joinChatRoom(chatRoomId, user);
     }
 
     @Override
     public void resignChatRoom(String chatRoomId) {
         User user = authenticationFacade.getCurrentUser();
-        if (!chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
-            throw NotChatRoomMemberException.EXCEPTION;
-        }
+        validateChatRoomMember(chatRoomId, user);
         chatRoomRepository.deleteMember(chatRoomId, user);
     }
 
@@ -64,6 +63,24 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                 .name(request.getName())
                 .userIds(List.of(user))
                 .build();
+    }
+
+    private void validateChatRoomMember(String chatRoomId, User user) {
+        if (!chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
+            throw NotChatRoomMemberException.EXCEPTION;
+        }
+    }
+
+    private void validateNotChatRoomMember(String chatRoomId, User user) {
+        if (chatRoomRepository.isChatRoomMember(chatRoomId, user)) {
+            throw NotChatRoomMemberException.EXCEPTION;
+        }
+    }
+
+    private void validateProjectMember(String projectId, User user) {
+        if (!chatRoomRepository.isProjectMember(user, projectId)) {
+            throw NotProjectMemberException.EXCEPTION;
+        }
     }
 
 }
