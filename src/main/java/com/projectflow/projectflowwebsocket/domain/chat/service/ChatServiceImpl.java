@@ -54,6 +54,10 @@ public class ChatServiceImpl implements ChatService {
         ChatRoom chatRoom = findChatRoomById(chatRoomId);
         return new OldChatMessageListResponse(
                 chatRepository.findAllByChatRoomOrderByCreatedAtAsc(chatRoom, pageable)
+                        .map(chat -> {
+                            chat.getReceiver().remove(user);
+                            return chat;
+                        })
                         .map(chat -> buildResponse(chat, user)).getContent()
         );
     }
