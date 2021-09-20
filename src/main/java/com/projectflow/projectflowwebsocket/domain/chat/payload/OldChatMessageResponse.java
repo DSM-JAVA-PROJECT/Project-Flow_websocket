@@ -1,5 +1,6 @@
-package com.projectflow.projectflowwebsocket.domain.message.payload;
+package com.projectflow.projectflowwebsocket.domain.chat.payload;
 
+import com.projectflow.projectflowwebsocket.domain.message.payload.MessageType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class ChatMessageResponse {
+public class OldChatMessageResponse {
 
     @Builder.Default
     private MessageType messageType = MessageType.MESSAGE;
