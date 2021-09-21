@@ -1,5 +1,6 @@
 package com.projectflow.projectflowwebsocket.domain.chat.controller;
 
+import com.projectflow.projectflowwebsocket.domain.chat.entity.Chat;
 import com.projectflow.projectflowwebsocket.domain.chat.payload.ChatRequest;
 import com.projectflow.projectflowwebsocket.domain.chat.payload.OldChatMessageListResponse;
 import com.projectflow.projectflowwebsocket.domain.chat.service.ChatService;
@@ -23,22 +24,22 @@ public class ChatController {
     @MessageMapping("/chat/{chatRoomId}/send")
     public int sendMessage(@DestinationVariable String chatRoomId,
                            @Payload ChatRequest request) {
-        chatService.saveMessage(chatRoomId, request);
-        messageService.sendMessage(chatRoomId, request);
+        Chat savedChat = chatService.saveMessage(chatRoomId, request);
+        messageService.sendMessage(chatRoomId, savedChat);
         return 201;
     }
 
     @MessageMapping("/chat/remove/{chatId}")
     public int removeMessage(@DestinationVariable String chatId) {
         String chatRoomId = chatService.removeMessage(chatId);
-        messageService.sendResignMessage(chatRoomId);
+        messageService.sendRemoveMessage(chatRoomId, chatId);
         return 204;
     }
 
     @GetMapping("/chat/{chatRoomId}")
     public OldChatMessageListResponse getOldMessages(@PathVariable String chatRoomId,
                                                      Pageable pageable) {
-        messageService.sendReadMessage(chatRoomId);
+        chatService.getOldChatMessage(chatRoomId, pageable);
         return chatService.getOldChatMessage(chatRoomId, pageable);
     }
 }

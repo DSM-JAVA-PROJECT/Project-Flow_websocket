@@ -30,7 +30,7 @@ public class ChatServiceImpl implements ChatService {
     private final AuthenticationFacade authenticationFacade;
 
     @Override
-    public void saveMessage(String chatRoomId, ChatRequest request) {
+    public Chat saveMessage(String chatRoomId, ChatRequest request) {
         User user = authenticationFacade.getCurrentUser();
 
         validateChatRoom(chatRoomId, user);
@@ -39,7 +39,7 @@ public class ChatServiceImpl implements ChatService {
         List<User> receivers = chatRoom.getUserIds();
         receivers.remove(user);
 
-        chatRepository.save(buildChat(chatRoom, user, request.getMessage()));
+        return chatRepository.save(buildChat(chatRoom, user, request.getMessage()));
     }
 
     @Override
