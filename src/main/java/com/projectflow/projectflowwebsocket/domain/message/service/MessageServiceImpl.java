@@ -64,6 +64,7 @@ public class MessageServiceImpl implements MessageService {
                 .senderImage(chat.getSender().getProfileImage())
                 .senderName(chat.getSender().getName())
                 .build();
+        template.convertAndSend("/topic/chatroom/" + chatRoomId, message);
 
     }
 
