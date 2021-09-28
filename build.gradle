@@ -47,7 +47,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // mongodb
-//    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 
     // netty
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
