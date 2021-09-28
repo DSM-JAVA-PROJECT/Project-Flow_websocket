@@ -1,6 +1,9 @@
 package com.projectflow.projectflowwebsocket.domain.message.payload;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class ChatMessageResponse {
+public class ChatMessage {
 
     @Builder.Default
     private MessageType messageType = MessageType.MESSAGE;

@@ -12,6 +12,7 @@ public enum ErrorCode {
     ALREADY_PARTICIPATE(409, "User Already Participated"),
     NOT_PROJECT_MEMBER(403, "Not Project Member"),
     CHATROOM_NOT_FOUND(404, "Chat Room Not Found"),
+    NOT_MESSAGE_OWNER(403, "Not Message Owner"),
     INVALID_TOKEN(401, "Invalid Token");
 
     private final int status;
