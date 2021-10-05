@@ -4,4 +4,5 @@ import com.projectflow.projectflowwebsocket.domain.project.payload.ProjectMember
 
 public interface MemberService {
     ProjectMemberListResponse getMemberList(String projectId);
+    ProjectMemberListResponse getNotParticipatedMemberList(String projectId, String chatRoomId);
 }
