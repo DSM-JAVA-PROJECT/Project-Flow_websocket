@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/{projectId}/chatroom")
+@RequestMapping("/{projectId}/member")
 public class MemberController {
 
     private final MemberService memberService;
