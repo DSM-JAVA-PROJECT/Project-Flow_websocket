@@ -20,16 +20,6 @@ public class MessageServiceImpl implements MessageService {
     private final AuthenticationFacade authenticationFacade;
 
     @Override
-    public void sendCreateChatRoomMessage(String projectId, ChatRoom chatRoom) {
-        var message = CreateChatRoomMessage.builder()
-                .id(chatRoom.getId().toString())
-                .roomName(chatRoom.getName())
-                .build();
-        chatRoom.getUserIds()
-                .forEach(user -> template.convertAndSendToUser(user.getEmail(), "/topic/chatroom/" + projectId, message));
-    }
-
-    @Override
     public void sendJoinMessage(String chatRoomId) {
         var message = JoinChatRoomMessage.builder()
                 .userId(authenticationFacade.getCurrentEmail())
@@ -71,7 +61,9 @@ public class MessageServiceImpl implements MessageService {
     // TODO: 2021-09-21 채팅을 읽었을 때 보낼 메세지
     @Override
     public void sendReadMessage(String chatRoomId) {
-
+        var message = ReadMessage.builder()
+                        .email(authenticationFacade.getCurrentEmail());
+        template.convertAndSend("/topic/chatroom/" + chatRoomId, message);
     }
 
 }

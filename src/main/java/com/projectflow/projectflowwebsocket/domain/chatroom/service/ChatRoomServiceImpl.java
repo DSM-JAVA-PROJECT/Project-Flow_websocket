@@ -28,7 +28,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Transactional
     @Override
-    public ChatRoom createChatRoom(String projectId, CreateChatRoomRequest request) {
+    public void createChatRoom(String projectId, CreateChatRoomRequest request) {
         User user = authenticationFacade.getCurrentUser();
         validateProjectMember(projectId, user);
 
@@ -40,8 +40,6 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         project.getChatRooms().add(chatRoom);
         projectRepository.save(project);
-
-        return chatRoom;
     }
 
     @Override
