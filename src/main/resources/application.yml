@@ -3,12 +3,12 @@ spring:
     mongodb:
       auto-index-creation: false
       authentication-database: admin
-      uri: ${MONGO_URL}
+      uri: "mongodb+srv://hong:hong@project-flow.fyczq.mongodb.net/project-flow?retryWrites=true&w=majority"
       database: project-flow
 rabbitmq:
-  port: ${RABBIT_PORT}
-  username: ${RABBIT_USERNAME}
-  password: ${RABBIT_PASSWORD}
-  host: ${RABBIT_HOST}
+  port: 61613
+  username: guest
+  password: guest
+  host: 211.38.86.92
 jwt:
-  secret: ${SECRET_KEY}
+  secret: Itiskindoffuntodotheimposiible1205!
