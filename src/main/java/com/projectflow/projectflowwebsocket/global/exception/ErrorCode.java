@@ -14,6 +14,8 @@ public enum ErrorCode {
     CHATROOM_NOT_FOUND(404, "Chat Room Not Found"),
     PROJECT_NOT_FOUND(404, "Project Not Found"),
     NOT_MESSAGE_OWNER(403, "Not Message Owner"),
+    INTERNAL_SERVER_ERROR(500, "Unexpected Error"),
+    JWT_VALIDATE_FAILED(401, "Jwt Validate Failed"),
     INVALID_TOKEN(401, "Invalid Token");
 
     private final int status;
