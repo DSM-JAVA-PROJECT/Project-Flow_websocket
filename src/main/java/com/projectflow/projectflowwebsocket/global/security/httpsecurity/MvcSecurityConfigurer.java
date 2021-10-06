@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenValidator validator;
+    private final CustomAuthenticationEntryPoint entryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,6 +22,9 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .apply(new JwtConfigure(validator))
                 .and()
-                .authorizeRequests().anyRequest().authenticated();
+                .authorizeRequests()
+                .anyRequest().authenticated().and()
+                .exceptionHandling()
+                .authenticationEntryPoint(entryPoint);
     }
 }

@@ -13,6 +13,7 @@ public enum ErrorCode {
     NOT_PROJECT_MEMBER(403, "Not Project Member"),
     CHATROOM_NOT_FOUND(404, "Chat Room Not Found"),
     PROJECT_NOT_FOUND(404, "Project Not Found"),
+    JWT_EXPIRED(401, "Jwt Token Expired"),
     NOT_MESSAGE_OWNER(403, "Not Message Owner"),
     INTERNAL_SERVER_ERROR(500, "Unexpected Error"),
     JWT_VALIDATE_FAILED(401, "Jwt Validate Failed"),
