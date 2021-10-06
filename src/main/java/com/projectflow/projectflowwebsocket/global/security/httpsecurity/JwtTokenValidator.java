@@ -27,7 +27,7 @@ public class JwtTokenValidator {
     private final AuthDetailsService authDetailsService;
 
     public Authentication createAuthentication(String token) {
-        String subject = getClaims(token).getSubject();
+        String subject = getClaims(token).get("email").toString();
 
         UserDetails userDetails = authDetailsService.loadUserByUsername(subject);
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
