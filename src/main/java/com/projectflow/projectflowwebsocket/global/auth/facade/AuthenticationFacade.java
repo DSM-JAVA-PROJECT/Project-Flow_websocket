@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 public interface AuthenticationFacade {
     User getCurrentUser();
     String getCurrentEmail();
+    User getUser(String email);
 }
