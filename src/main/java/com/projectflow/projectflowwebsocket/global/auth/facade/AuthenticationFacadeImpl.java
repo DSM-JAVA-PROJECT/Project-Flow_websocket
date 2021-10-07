@@ -1,5 +1,6 @@
 package com.projectflow.projectflowwebsocket.global.auth.facade;
 
+import com.projectflow.projectflowwebsocket.global.auth.exceptions.UserNotFoundException;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.domain.user.entity.UserRepository;
 import com.projectflow.projectflowwebsocket.global.auth.exceptions.AuthUserNotFoundException;
@@ -22,6 +23,12 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     @Override
     public String getCurrentEmail() {
         return getEmail();
+    }
+
+    @Override
+    public User getUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     private String getEmail() {

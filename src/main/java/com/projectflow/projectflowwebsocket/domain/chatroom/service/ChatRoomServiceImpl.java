@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,10 +57,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoomRepository.deleteMember(chatRoomId, user);
     }
 
-    private ChatRoom buildChatRoom(CreateChatRoomRequest request, User user) {
+    private ChatRoom buildChatRoom(CreateChatRoomRequest request, User authUser) {
+        List<User> users = request.getEmails().stream()
+                .map(authenticationFacade::getUser)
+                .collect(Collectors.toList());
+        users.add(authUser);
+
         return ChatRoom.builder()
                 .name(request.getName())
-                .userIds(List.of(user))
+                .userIds(users)
                 .build();
     }
 
