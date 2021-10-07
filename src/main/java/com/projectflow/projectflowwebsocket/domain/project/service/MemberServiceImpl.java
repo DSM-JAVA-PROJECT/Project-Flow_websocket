@@ -10,6 +10,7 @@ import com.projectflow.projectflowwebsocket.domain.project.exceptions.ProjectNot
 import com.projectflow.projectflowwebsocket.domain.project.payload.ProjectMemberListResponse;
 import com.projectflow.projectflowwebsocket.domain.project.payload.ProjectMemberResponse;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
+import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final ProjectRepository projectRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public ProjectMemberListResponse getMemberList(String projectId) {
@@ -30,6 +32,7 @@ public class MemberServiceImpl implements MemberService {
         return new ProjectMemberListResponse(project.getProjectUsers()
                 .stream()
                 .map(ProjectUser::getUser)
+                .filter(user -> !user.getEmail().equals(authenticationFacade.getCurrentEmail()))
                 .map(this::buildMemberResponse)
                 .collect(Collectors.toList()));
     }
@@ -43,6 +46,7 @@ public class MemberServiceImpl implements MemberService {
                 .filter(projectUser -> project.getProjectUsers().stream()
                         .anyMatch(member -> member.getUser().getEmail()
                                 .equals(projectUser.getEmail())))
+                .filter(user -> user.getEmail().equals(authenticationFacade.getCurrentEmail()))
                 .map(this::buildMemberResponse)
                 .collect(Collectors.toList()));
     }
