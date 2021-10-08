@@ -23,6 +23,7 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .apply(new JwtConfigure(validator))
                 .and()
                 .authorizeRequests()
+                .antMatchers("/websocket").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
                 .authenticationEntryPoint(entryPoint);
