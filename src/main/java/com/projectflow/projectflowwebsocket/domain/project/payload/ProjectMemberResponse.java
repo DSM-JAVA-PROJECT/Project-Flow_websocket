@@ -13,7 +13,7 @@ public class ProjectMemberResponse {
 
     private String name;
 
-    private String id;
+    private String email;
 
     private String profileImage;
 

@@ -12,9 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateChatRoomRequest {
 
-    @NotBlank
-    private String name;
-
     private List<String> emails;
 
 }

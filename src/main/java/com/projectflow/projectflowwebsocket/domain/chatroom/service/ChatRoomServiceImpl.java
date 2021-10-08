@@ -64,7 +64,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         users.add(authUser);
 
         return ChatRoom.builder()
-                .name(request.getName())
+                .name(authUser.getName() + "님의 채팅방")
                 .userIds(users)
                 .build();
     }
