@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService {
 
     private ProjectMemberResponse buildMemberResponse(User user) {
         return ProjectMemberResponse.builder()
-                .id(user.getId().toString())
+                .id(user.getEmail())
                 .name(user.getName())
                 .profileImage(user.getProfileImage())
                 .build();
