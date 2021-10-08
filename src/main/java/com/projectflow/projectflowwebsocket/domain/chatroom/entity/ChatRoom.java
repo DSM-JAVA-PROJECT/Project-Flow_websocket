@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -29,10 +30,13 @@ public class ChatRoom {
 
     private List<Plan> plans;
 
+    private String profileImage;
+
     @Builder
-    private ChatRoom(String name, List<User> userIds) {
+    private ChatRoom(String name, List<User> userIds, String profileImage) {
         this.name = name;
         this.userIds = userIds;
         this.plans = new ArrayList<>();
+        this.profileImage = profileImage;
     }
 }

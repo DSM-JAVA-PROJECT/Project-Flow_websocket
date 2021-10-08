@@ -6,9 +6,12 @@ import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.ChatRoomA
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.ChatRoomNotFoundException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.NotChatRoomMemberException;
 import com.projectflow.projectflowwebsocket.domain.chatroom.exceptions.NotProjectMemberException;
+import com.projectflow.projectflowwebsocket.domain.chatroom.payload.ChatRoomListResponse;
+import com.projectflow.projectflowwebsocket.domain.chatroom.payload.ChatRoomResponse;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.project.entity.Project;
 import com.projectflow.projectflowwebsocket.domain.project.entity.ProjectRepository;
+import com.projectflow.projectflowwebsocket.domain.project.exceptions.ProjectNotFoundException;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import com.projectflow.projectflowwebsocket.global.auth.facade.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +39,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         Project project = projectRepository.findById(new ObjectId(projectId))
                 .orElseThrow(() -> ChatRoomNotFoundException.EXCEPTION);
 
-        ChatRoom unsavedChatRoom = buildChatRoom(request, user);
+        ChatRoom unsavedChatRoom = buildChatRoom(request, user, project.getLogoImage());
         ChatRoom chatRoom = chatRoomRepository.save(unsavedChatRoom);
 
         project.getChatRooms().add(chatRoom);
@@ -57,7 +60,22 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoomRepository.deleteMember(chatRoomId, user);
     }
 
-    private ChatRoom buildChatRoom(CreateChatRoomRequest request, User authUser) {
+    @Override
+    public ChatRoomListResponse getChatRooms(String projectId) {
+        Project project = projectRepository.findById(new ObjectId(projectId))
+                .orElseThrow(() -> ProjectNotFoundException.EXCEPTION);
+
+        List<ChatRoomResponse> responses = project.getChatRooms()
+                .stream().map(chatRoom -> ChatRoomResponse.builder()
+                        .chatRoomImage(chatRoom.getProfileImage())
+                        .chatRoomName(chatRoom.getName())
+                        .id(chatRoom.getId().toString())
+                        .build())
+                .collect(Collectors.toList());
+        return new ChatRoomListResponse(responses);
+    }
+
+    private ChatRoom buildChatRoom(CreateChatRoomRequest request, User authUser, String image) {
         List<User> users = request.getEmails().stream()
                 .map(authenticationFacade::getUser)
                 .collect(Collectors.toList());
@@ -66,6 +84,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return ChatRoom.builder()
                 .name(authUser.getName() + "님의 채팅방")
                 .userIds(users)
+                .profileImage(image)
                 .build();
     }
 
