@@ -32,10 +32,6 @@ public class JwtTokenValidator {
     private final AuthDetailsService authDetailsService;
 
     public Authentication createAuthentication(String token) {
-        if(token == null) {
-            throw JwtValidatingFailedException.EXCEPTION;
-        }
-
         String subject = getClaims(token).get("email").toString();
 
         UserDetails userDetails = authDetailsService.loadUserByUsername(subject);
@@ -44,7 +40,6 @@ public class JwtTokenValidator {
 
     public String parseToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTH_HEADER);
-        System.out.println(bearerToken);
         return bearerToken != null ? bearerToken.replaceFirst(JWT_PREFIX, "") : null;
     }
 
