@@ -1,6 +1,7 @@
 package com.projectflow.projectflowwebsocket.domain.project.entity;
 
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
+import com.projectflow.projectflowwebsocket.domain.plan.entity.Plan;
 import com.projectflow.projectflowwebsocket.domain.user.entity.User;
 import lombok.*;
 import org.bson.types.ObjectId;
@@ -43,6 +44,8 @@ public class Project {
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
     private List<ProjectUser> projectUsers = new ArrayList<>();
+
+    private List<Plan> plans;
 
     private boolean isFinished;
 
