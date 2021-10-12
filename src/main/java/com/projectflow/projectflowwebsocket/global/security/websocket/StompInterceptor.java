@@ -23,6 +23,7 @@ public class StompInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel messageChannel) {      // 메세지들이 통과하는 interceptor 로, send 이전에 거쳐간다.
+        System.out.println("################# preSend 도착");
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);       // Message 에서 Header 추출
         String token = accessor.getFirstNativeHeader(AUTH_HEADER).replaceFirst(JWT_PREFIX, "");
         Authentication authentication = jwtTokenValidator.createAuthentication(token);
