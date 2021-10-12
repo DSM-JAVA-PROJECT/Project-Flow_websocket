@@ -14,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     private final JwtTokenValidator validator;
+    private final CorsFilter corsFilter;
     private final CustomAuthenticationEntryPoint entryPoint;
 
     @Override
@@ -23,7 +24,7 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
                 .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
-                .apply(new JwtConfigure(validator))
+                .apply(new JwtConfigure(validator, corsFilter))
                 .and()
                 .authorizeRequests()
                 .antMatchers("/websocket").permitAll()
