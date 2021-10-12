@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     private final JwtTokenValidator validator;
-    private final CorsFilter corsFilter;
+//    private final CorsFilter corsFilter;
     private final CustomAuthenticationEntryPoint entryPoint;
 
     @Override
@@ -24,10 +25,11 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
                 .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
-                .apply(new JwtConfigure(validator, corsFilter))
+                .apply(new JwtConfigure(validator))
                 .and()
                 .authorizeRequests()
                 .antMatchers("/websocket").permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling()
                 .authenticationEntryPoint(entryPoint);
