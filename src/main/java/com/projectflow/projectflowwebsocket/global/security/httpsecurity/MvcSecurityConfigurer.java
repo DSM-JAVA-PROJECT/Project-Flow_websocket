@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
 
     private final JwtTokenValidator validator;
     private final CustomAuthenticationEntryPoint entryPoint;
@@ -32,12 +32,4 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter implemen
                 .authenticationEntryPoint(entryPoint);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("*")
-                .allowedHeaders("*")
-                .allowCredentials(false);
-    }
 }
