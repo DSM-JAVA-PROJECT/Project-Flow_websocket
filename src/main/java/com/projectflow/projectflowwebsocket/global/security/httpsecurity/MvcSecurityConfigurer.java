@@ -20,6 +20,7 @@ public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter implemen
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .headers().frameOptions().disable().and()
+                .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
                 .apply(new JwtConfigure(validator))
