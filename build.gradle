@@ -20,13 +20,14 @@ repositories {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter'
-
     // websocket
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     // rabbitmq
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+//    implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     // mongodb
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
@@ -49,13 +50,14 @@ dependencies {
     // mongodb
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 
-    // netty
-    implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
-
     // valitation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.glassfish.jaxb:jaxb-runtime'
+
+    implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
+
+//    runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64"
 }
 
 test {

@@ -19,7 +19,6 @@ public class HttpJwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String token = jwtTokenValidator.parseToken(request);
-        System.out.println("Token:" + token);
         if(token != null) {
             Authentication authentication = jwtTokenValidator.createAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
