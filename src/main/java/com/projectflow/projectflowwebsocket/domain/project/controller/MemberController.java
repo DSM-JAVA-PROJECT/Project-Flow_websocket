@@ -1,5 +1,7 @@
 package com.projectflow.projectflowwebsocket.domain.project.controller;
 
+import com.projectflow.projectflowwebsocket.domain.chatroom.payload.ChatRoomListResponse;
+import com.projectflow.projectflowwebsocket.domain.chatroom.service.ChatRoomService;
 import com.projectflow.projectflowwebsocket.domain.project.payload.ProjectMemberListResponse;
 import com.projectflow.projectflowwebsocket.domain.project.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final ChatRoomService chatRoomService;
+
+    @GetMapping("/{projectId}")
+    private ChatRoomListResponse getChatRoom(@PathVariable String projectId) {
+        return chatRoomService.getChatRooms(projectId);
+    }
 
     @GetMapping
     public ProjectMemberListResponse getMemberList(@PathVariable String projectId) {

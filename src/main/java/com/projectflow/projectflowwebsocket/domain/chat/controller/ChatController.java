@@ -10,11 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class ChatController {
 
@@ -36,10 +38,4 @@ public class ChatController {
         return 204;
     }
 
-    @GetMapping("/chat/{chatRoomId}")
-    public OldChatMessageListResponse getOldMessages(@PathVariable String chatRoomId,
-                                                     Pageable pageable) {
-        chatService.getOldChatMessage(chatRoomId, pageable);
-        return chatService.getOldChatMessage(chatRoomId, pageable);
-    }
 }
