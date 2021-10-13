@@ -7,7 +7,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.netty.handler.codec.base64.Base64Encoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,20 +15,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @RequiredArgsConstructor
 @Component
 public class JwtTokenValidator {
 
-    @Value("${jwt.secret}")
-    private String secret;
-
     private static final String JWT_PREFIX = "Bearer ";
     private static final String AUTH_HEADER = "Authorization";
-
     private final AuthDetailsService authDetailsService;
+    @Value("${jwt.secret}")
+    private String secret;
 
     public Authentication createAuthentication(String token) {
         String subject = getClaims(token).get("email").toString();

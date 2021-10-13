@@ -6,16 +6,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter{
+public class MvcSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenValidator validator;
-//    private final CorsFilter corsFilter;
+
     private final CustomAuthenticationEntryPoint entryPoint;
 
     @Override
