@@ -1,27 +1,21 @@
 package com.projectflow.projectflowwebsocket.domain.chatroom.controller;
 
 import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
-import com.projectflow.projectflowwebsocket.domain.chatroom.payload.ChatRoomListResponse;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.chatroom.service.ChatRoomService;
-import com.projectflow.projectflowwebsocket.domain.message.service.ChatRoomMessageService;
 import com.projectflow.projectflowwebsocket.domain.message.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @Controller
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-    private final ChatRoomMessageService messageService;
+    private final MessageService messageService;
 
     @MessageMapping("/create/chatroom/{projectId}")
     public int createChatRoom(@DestinationVariable String projectId,
@@ -32,8 +26,8 @@ public class ChatRoomController {
 
     @MessageMapping("/join/chatroom/{chatRoomId}")
     public int joinChatRoom(@DestinationVariable String chatRoomId) {
-        ChatRoom chatRoom = chatRoomService.joinChatRoom(chatRoomId);
-        messageService.sendJoinChatRoomMessage(chatRoom);
+        String roomId = chatRoomService.joinChatRoom(chatRoomId);
+        messageService.sendJoinMessage(roomId);
         return 200;
     }
 
