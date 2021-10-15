@@ -41,7 +41,7 @@ public class JwtTokenValidator {
 
     private Claims getClaims(String token) {
         try {
-            return Jwts.parser().setSigningKey(Base64.getEncoder().encodeToString(secret.getBytes())).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(Base64.getEncoder().encode(secret.getBytes())).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             throw JwtExpiredException.EXCEPTION;
         } catch (JwtException e) {

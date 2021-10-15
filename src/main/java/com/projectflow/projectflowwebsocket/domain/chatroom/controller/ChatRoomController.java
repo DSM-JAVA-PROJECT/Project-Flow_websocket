@@ -1,8 +1,10 @@
 package com.projectflow.projectflowwebsocket.domain.chatroom.controller;
 
+import com.projectflow.projectflowwebsocket.domain.chatroom.entity.ChatRoom;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.ChatRoomListResponse;
 import com.projectflow.projectflowwebsocket.domain.chatroom.payload.CreateChatRoomRequest;
 import com.projectflow.projectflowwebsocket.domain.chatroom.service.ChatRoomService;
+import com.projectflow.projectflowwebsocket.domain.message.service.ChatRoomMessageService;
 import com.projectflow.projectflowwebsocket.domain.message.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-    private final MessageService messageService;
+    private final ChatRoomMessageService messageService;
 
     @MessageMapping("/create/chatroom/{projectId}")
     public int createChatRoom(@DestinationVariable String projectId,
@@ -30,7 +32,8 @@ public class ChatRoomController {
 
     @MessageMapping("/join/chatroom/{chatRoomId}")
     public int joinChatRoom(@DestinationVariable String chatRoomId) {
-        chatRoomService.joinChatRoom(chatRoomId);
+        ChatRoom chatRoom = chatRoomService.joinChatRoom(chatRoomId);
+        messageService.sendJoinChatRoomMessage(chatRoom);
         return 200;
     }
 
