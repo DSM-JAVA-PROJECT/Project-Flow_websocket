@@ -12,6 +12,7 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 
 @RequiredArgsConstructor
 @Component
@@ -24,14 +25,19 @@ public class StompInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel messageChannel) {      // 메세지들이 통과하는 interceptor 로, send 이전에 거쳐간다.
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);       // Message 에서 Header 추출
-        String token = accessor.getFirstNativeHeader(AUTH_HEADER).replaceFirst(JWT_PREFIX, "");
-        Authentication authentication = jwtTokenValidator.createAuthentication(token);
         boolean isConnect = StompCommand.CONNECT == accessor.getCommand();
-        if (isConnect && authentication == null) {        // 만약 연결 요청이고 토큰이 유효하지 않다면
-            SecurityContextHolder.clearContext();
-            throw InvalidTokenException.EXCEPTION;
-        } else {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        if(isConnect) {
+            String token = accessor.getFirstNativeHeader(AUTH_HEADER).replaceFirst(JWT_PREFIX, "");
+
+            Authentication authentication = jwtTokenValidator.createAuthentication(token);
+
+            if (authentication == null) {        // 만약 연결 요청이고 토큰이 유효하지 않다면
+                SecurityContextHolder.clearContext();
+                throw InvalidTokenException.EXCEPTION;
+            } else {
+                accessor.setUser(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         return message;
     }
