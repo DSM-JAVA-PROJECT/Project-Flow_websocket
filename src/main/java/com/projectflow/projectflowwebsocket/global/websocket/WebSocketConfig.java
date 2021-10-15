@@ -2,9 +2,13 @@ package com.projectflow.projectflowwebsocket.global.websocket;
 
 //import com.projectflow.projectflowwebsocket.global.security.websocket.StompInterceptor;
 
+import com.projectflow.projectflowwebsocket.global.security.websocket.StompInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -16,6 +20,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSocketMessageBroker
+@Order(Ordered.HIGHEST_PRECEDENCE + 99)
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Value("${rabbitmq.host}")
@@ -26,6 +31,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Value("${rabbitmq.username}")
     private String username;
+
+    private final StompInterceptor stompInterceptor;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -42,6 +49,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setRelayPort(61613)                                    // rabbitMQ 에서 STOMP plugin 포트는 61613
                 .setClientLogin(username)
                 .setClientPasscode(password);
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration channelRegistration) {        // 만들어둔 interceptor 등록
+        channelRegistration.interceptors(stompInterceptor);
     }
 
 }
