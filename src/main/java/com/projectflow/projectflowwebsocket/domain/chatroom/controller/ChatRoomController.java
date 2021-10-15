@@ -34,6 +34,7 @@ public class ChatRoomController {
     @MessageMapping("/resign/chatroom/{chatRoomId}")
     public int resign(@DestinationVariable String chatRoomId) {
         chatRoomService.resignChatRoom(chatRoomId);
+        messageService.sendResignMessage(chatRoomId);
         return 200;
     }
 
