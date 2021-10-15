@@ -47,10 +47,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public void joinChatRoom(String chatRoomId) {
+    public String joinChatRoom(String chatRoomId) {
         User user = authenticationFacade.getCurrentUser();
         validateNotChatRoomMember(chatRoomId, user);
-        chatRoomRepository.joinChatRoom(chatRoomId, user);
+        return chatRoomRepository.joinChatRoom(chatRoomId, user);
     }
 
     @Override
